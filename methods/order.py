@@ -1,3 +1,4 @@
+import allure
 import requests
 
 from data import Urls
@@ -5,6 +6,7 @@ from data import Urls
 
 class Order:
 
+    @allure.step("Метод создания заказа")
     def create_order(self, token, ingredient):
 
         payload = {"ingredients": ingredient}
@@ -16,6 +18,7 @@ class Order:
         }
         return new_order
 
+    @allure.step("Метод получения заказов конкретного пользователя")
     def get_orders_by_user(self, token):
 
         response = requests.get(f'{Urls.BASE_URL}{Urls.ORDER}', headers={"Authorization": token})

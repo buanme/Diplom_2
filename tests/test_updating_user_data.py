@@ -1,8 +1,11 @@
+import allure
+
 from data import RandomString, Responses
 
 
 class TestUpdatingUserData:
 
+    @allure.title("Проверка, что проходит изменение эмейла")
     def test_updating_user_email_success(self, user):
         data_new_user = RandomString.data_new_user()
         user.create_user(data_new_user['email'], data_new_user['password'], data_new_user['name'])
@@ -16,6 +19,7 @@ class TestUpdatingUserData:
                user_data['response']['user']['name'] == updated_user['response']['user']['name']
         user.delete_user(token_user)
 
+    @allure.title("Проверка, что проходит изменение пароля")
     def test_updating_user_password_success(self, user):
         data_new_user = RandomString.data_new_user()
         user.create_user(data_new_user['email'], data_new_user['password'], data_new_user['name'])
@@ -29,6 +33,7 @@ class TestUpdatingUserData:
                user_data['response']['user']['name'] == updated_user['response']['user']['name']
         user.delete_user(token_user)
 
+    @allure.title("Проверка, что проходит изменение имени")
     def test_updating_user_name_success(self, user):
         data_new_user = RandomString.data_new_user()
         user.create_user(data_new_user['email'], data_new_user['password'], data_new_user['name'])
@@ -42,6 +47,7 @@ class TestUpdatingUserData:
                user_data['response']['user']['name'] != updated_user['response']['user']['name']
         user.delete_user(token_user)
 
+    @allure.title("Проверка, что приходит ошибка при попытке обновить эмейл на уже зарегистрированный")
     def test_updating_user_existing_email_error(self, user):
         data_new_user = RandomString.data_new_user()
         user.create_user(data_new_user['email'], data_new_user['password'], data_new_user['name'])
@@ -53,6 +59,7 @@ class TestUpdatingUserData:
         assert updated_user['status_code'] == 403 and updated_user['response']['message'] == Responses.UPDATING_EMAIL_ERROR
         user.delete_user(token_user)
 
+    @allure.title("Проверка, что приходит ошибка обновления эмейла для неавторизованного пользователя")
     def test_updating_user_email_without_auth_error(self, user):
         data_new_user = RandomString.data_new_user()
         user.create_user(data_new_user['email'], data_new_user['password'], data_new_user['name'])
@@ -63,6 +70,7 @@ class TestUpdatingUserData:
         token_user = login_user['response']['accessToken']
         user.delete_user(token_user)
 
+    @allure.title("Проверка, что приходит ошибка обновления пароля для неавторизованного пользователя")
     def test_updating_user_password_without_auth_error(self, user):
         data_new_user = RandomString.data_new_user()
         user.create_user(data_new_user['email'], data_new_user['password'], data_new_user['name'])
@@ -73,6 +81,7 @@ class TestUpdatingUserData:
         token_user = login_user['response']['accessToken']
         user.delete_user(token_user)
 
+    @allure.title("Проверка, что приходит ошибка обновления имени для неавторизованного пользователя")
     def test_updating_user_name_without_auth_error(self, user):
         data_new_user = RandomString.data_new_user()
         user.create_user(data_new_user['email'], data_new_user['password'], data_new_user['name'])
