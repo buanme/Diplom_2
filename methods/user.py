@@ -6,8 +6,9 @@ from data import Urls
 
 class User:
 
+    @staticmethod
     @allure.step("Метод создания пользователя")
-    def create_user(self, email, password, name):
+    def create_user(email, password, name):
         payload = {
             "email": email,
             "password": password,
@@ -22,8 +23,9 @@ class User:
         }
         return new_user
 
+    @staticmethod
     @allure.step("Метод авторизации пользователя")
-    def login_user(self, email, password):
+    def login_user(email, password):
         payload = {
             "email": email,
             "password": password,
@@ -37,8 +39,9 @@ class User:
         }
         return auth_user
 
+    @staticmethod
     @allure.step("Метод удаления пользователя")
-    def delete_user(self, token):
+    def delete_user(token):
         response = requests.delete(f'{Urls.BASE_URL}{Urls.DATA_USER}', headers={"Authorization": token})
 
         delete_user = {
@@ -47,8 +50,9 @@ class User:
         }
         return delete_user
 
+    @staticmethod
     @allure.step("Метод получения данных пользователя")
-    def user_data_info(self, token):
+    def user_data_info(token):
         response = requests.get(f'{Urls.BASE_URL}{Urls.DATA_USER}', headers={"Authorization": token})
 
         user_info = {
@@ -57,8 +61,9 @@ class User:
         }
         return user_info
 
+    @staticmethod
     @allure.step("Метод обновления данных пользователя")
-    def updating_user_data(self, data, token):
+    def updating_user_data(data, token):
         response = requests.patch(f'{Urls.BASE_URL}{Urls.DATA_USER}', json=data, headers={"Authorization": token})
 
         updated_user = {
